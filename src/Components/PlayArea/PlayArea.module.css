@@ -1,0 +1,8 @@
+.PlayArea{
+  display: block;
+  width: 85vh;
+  height: 85vh;
+  position: relative;
+  margin:auto;
+  background-color:lightblue; 
+}
