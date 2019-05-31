@@ -1,4 +1,8 @@
 .Fruit {
-  border-style: dashed;
-  /* position: absolute; */
+  position: absolute;
+  width: 6vh;
+  height: 6vh;
+  background: url('../../../resources/images/apple.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }

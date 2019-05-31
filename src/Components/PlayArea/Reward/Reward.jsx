@@ -1,14 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import style from "./Reward.module.css"
 
- class Reward extends React.Component {
-   render() {
-    return (
-      <div className={style.Reward}>
-        Reward
-      </div>
-    );
-   }
- }
- 
- export default Reward;
+const Reward = (props) => {
+  const { x, y } = props;
+  const positionStyle = {
+    left: x + 'px',
+    bottom: y + 'px'
+  };
+
+  return (
+    <div className={style.Reward} style={positionStyle}>
+      Reward
+    </div>
+  )
+}
+
+Reward.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+};
+
+export default Reward;
