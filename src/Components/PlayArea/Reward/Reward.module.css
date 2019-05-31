@@ -1,4 +1,8 @@
 .Reward {
-  border-style: dashed;
   position: absolute;
+  width: 6vh;
+  height: 6vh;
+  background: url('../../../resources/images/gift.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }

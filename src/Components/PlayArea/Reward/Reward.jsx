@@ -11,9 +11,7 @@ const Reward = (props) => {
   };
 
   return (
-    <div className={style.Reward} style={positionStyle}>
-      Reward
-    </div>
+    <div className={style.Reward} style={positionStyle} />
   )
 }
 

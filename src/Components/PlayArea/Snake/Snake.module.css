@@ -1,4 +1,18 @@
 .Snake {
-  border-style: dashed;
-  /* position: absolute; */
+  position: absolute;
+}
+
+.SnakeHead {
+  width: 5vh;
+  height: 5vh;
+  background: url('../../../resources/images/snake-head-up.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.SnakeBody {
+  width: 5vh;
+  height: 5vh;
+  background: url('../../../resources/images/snake-body.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
