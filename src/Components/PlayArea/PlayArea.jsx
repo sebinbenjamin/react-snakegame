@@ -22,6 +22,9 @@ class PlayArea extends React.Component {
 
   componentDidMount() {
     const { speed } = this.state;
+    // for (let i = 0; i <= 160; i++) {
+    //   this.playGame();
+    // }
     setInterval(() => this.playGame(), speed);
   }
 
