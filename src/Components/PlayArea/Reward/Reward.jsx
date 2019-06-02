@@ -6,8 +6,8 @@ import style from "./Reward.module.css"
 const Reward = (props) => {
   const { x, y } = props;
   const positionStyle = {
-    left: x + 'px',
-    bottom: y + 'px'
+    left: x + 'vh',
+    bottom: y + 'vh'
   };
 
   return (

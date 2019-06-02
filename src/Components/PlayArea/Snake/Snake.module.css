@@ -1,18 +1,36 @@
 .Snake {
-  position: absolute;
+  /* position: absolute; */
 }
 
 .SnakeHead {
+  position: absolute;
   width: 5vh;
   height: 5vh;
-  background: url('../../../resources/images/snake-head-up.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
+  z-index: 2;
 }
+
+.SnakeHead.UP{
+  background: url('../../../resources/images/snake-head-up.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain; 
+}
+
+.SnakeHead.RIGHT{
+  background: url('../../../resources/images/snake-head-side.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain; 
+}
+
 .SnakeBody {
-  width: 5vh;
-  height: 5vh;
+  position: absolute;
+  width: 4vh;
+  height: 4vh;
   background: url('../../../resources/images/snake-body.svg');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center bottom;
+  margin-left: 0.5vh;
+  margin-right: 0.5vh;
 }

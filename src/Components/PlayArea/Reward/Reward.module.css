@@ -1,7 +1,7 @@
 .Reward {
   position: absolute;
-  width: 6vh;
-  height: 6vh;
+  width: 5vh;
+  height: 5vh;
   background: url('../../../resources/images/gift.svg');
   background-repeat: no-repeat;
   background-size: contain;

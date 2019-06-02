@@ -6,8 +6,8 @@ import style from "./Fruit.module.css"
 const Fruit = (props) => {
   const { x, y } = props;
   const positionStyle = {
-    left: x + 'px',
-    bottom: y + 'px'
+    left: x + 'vh',
+    bottom: y + 'vh'
   };
   return (
     <div className={style.Fruit} style={positionStyle} />
