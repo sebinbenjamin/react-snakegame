@@ -6,6 +6,7 @@ import Reward from "./Reward/Reward";
 import styles from "./PlayArea.module.css";
 
 import { moveSnake } from "../../utils/snake.utils";
+import { playerKeyDown } from "../../utils/playarea.utils";
 
 //all positions are in [x, y], where x and y are the coordinates on a 
 const initialState = {
@@ -22,10 +23,11 @@ class PlayArea extends React.Component {
 
   componentDidMount() {
     const { speed } = this.state;
-    // for (let i = 0; i <= 160; i++) {
+    // for (let i = 0; i <= 100; i++) {
     //   this.playGame();
     // }
     setInterval(() => this.playGame(), speed);
+    window.onkeydown = (event) => playerKeyDown(event,this);
   }
 
   playGame() {

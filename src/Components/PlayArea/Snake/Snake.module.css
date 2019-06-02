@@ -9,18 +9,26 @@
   z-index: 2;
 }
 
-.SnakeHead.UP{
+.SnakeHead.UP {
   background: url('../../../resources/images/snake-head-up.svg');
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: contain; 
+  background-size: contain;
 }
-
-.SnakeHead.RIGHT{
-  background: url('../../../resources/images/snake-head-side.svg');
+.SnakeHead.DOWN {
+  background: url('../../../resources/images/snake-head-up.svg');
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: contain; 
+  background-size: contain;
+  margin-bottom: -1vh;
+}
+
+.SnakeHead.RIGHT,
+.SnakeHead.LEFT {
+  background: url('../../../resources/images/snake-head-side.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .SnakeBody {
@@ -30,7 +38,15 @@
   background: url('../../../resources/images/snake-body.svg');
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.SnakeBody.UP {
   background-position: center bottom;
+  margin-left: 0.5vh;
+  margin-right: 0.5vh;
+}
+.SnakeBody.DOWN {
+  background-position: center top;
   margin-left: 0.5vh;
   margin-right: 0.5vh;
 }

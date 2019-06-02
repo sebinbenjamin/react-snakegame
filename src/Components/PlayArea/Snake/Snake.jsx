@@ -23,7 +23,7 @@ const Snake = ({ snakeParts, direction }) => {
           return (
             <div
               key={uid(index)}
-              className={style.SnakeBody}
+              className={[style.SnakeBody, style[`${direction}`]].join(' ')}
               style={
                 {
                   left: bodyPart[0] + 'vh',
