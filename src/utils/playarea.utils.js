@@ -22,6 +22,7 @@ export const playerKeyDown = (event, setNewDirMethod, oldDirection, that) => {
       break;
     case primaryKeys.PAUSE || altKeys.PAUSE:
       event.preventDefault();
+      that.props.changeGamePlay();
       break;
     default:
       // eslint-disable-next-line no-console

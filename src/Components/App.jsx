@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <div className={styles.app}>
         <GameProgress />
-        <PlayArea isPaused={isPaused} />
+        <PlayArea isPaused={isPaused} changeGamePlay={() => { this.updateGamePlay() }} />
         <GameControls isPaused={isPaused} changeGamePlay={() => { this.updateGamePlay() }} />
         <Attribution />
       </div>
