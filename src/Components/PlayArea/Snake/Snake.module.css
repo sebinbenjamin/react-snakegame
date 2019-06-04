@@ -37,7 +37,7 @@
   height: 4vh;
   background: url('../../../resources/images/snake-body.svg');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: auto;
 }
 
 .SnakeBody.UP {
@@ -49,4 +49,12 @@
   background-position: center top;
   margin-left: 0.5vh;
   margin-right: 0.5vh;
+}
+.SnakeBody.LEFT {
+  background-position: center right;
+  margin: 0.5vh;
+}
+.SnakeBody.RIGHT {
+  background-position: center left;
+  margin: 0.5vh;
 }
