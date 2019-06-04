@@ -1,0 +1,24 @@
+.GameProgress{
+  display: block;
+  width: 85vh;
+  position: relative;
+  margin:auto;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2vh;
+}
+
+.level {
+  flex: 0 0 15%;
+}
+
+.score {
+  flex: 0 0 15%;
+}
+
+.highScore {
+  flex: 0 0 15%;
+}

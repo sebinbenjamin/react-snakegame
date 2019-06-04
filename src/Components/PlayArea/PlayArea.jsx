@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Snake from "./Snake/Snake";
 import Fruit from "./Fruit/Fruit";
@@ -15,27 +16,47 @@ const initialState = {
   snakeParts: [[0, 8], [0, 6], [0, 4], [0, 2], [0, 0]],
   fruit: [80, 80],
   reward: [20, 10],
-  showReward: true
+  showReward: true,
 }
 
 class PlayArea extends React.Component {
   state = initialState;
-
   componentDidMount() {
     const { speed } = this.state;
     // for (let i = 0; i <= 100; i++) {
     //   this.playGame();
     // }
     setInterval(() => this.playGame(), speed);
-    window.onkeydown = (event) => playerKeyDown(event,this);
+    window.addEventListener('keydown', this.passPlayerKeyDown.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.passPlayerKeyDown);
+  }
+
+  setNewDirection(newDirection, that) {
+    const { isPaused } = that.props;
+    if (!isPaused) {
+      that.setState({
+        direction: newDirection
+      });
+    }
+  }
+
+  passPlayerKeyDown(event) {
+    const { direction } = this.state;
+    playerKeyDown(event, this.setNewDirection, direction, this);
   }
 
   playGame() {
-    this.setState((state) => {
-      return {
-        snakeParts: moveSnake(state.snakeParts, state.direction)
-      }
-    });
+    const { isPaused } = this.props;
+    if (!isPaused) {
+      this.setState((state) => {
+        return {
+          snakeParts: moveSnake(state.snakeParts, state.direction)
+        }
+      });
+    }
   }
 
   render() {
@@ -48,6 +69,10 @@ class PlayArea extends React.Component {
       </div>
     )
   }
+}
+
+PlayArea.propTypes = {
+  isPaused: PropTypes.bool.isRequired
 }
 
 export default PlayArea;

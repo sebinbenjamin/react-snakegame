@@ -1,3 +1,40 @@
 .GameControls {
-  border-style: double;
+  display: block;
+  width: 85vh;
+  position: relative;
+  margin: auto;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 1.5vh;
+  margin-bottom: 1vh;
+}
+
+button {
+  flex: 0 0 10%;
+  background-color: #2196f3;
+  border: none;
+  color: white;
+  font-size: medium;
+  padding: 0.4em;
+}
+
+.play {
+  width: 4vh;
+  height: 4vh;
+  background: url('../../resources/images/play.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center top;
+}
+.pause {
+  width: 2vh;
+  height: 2vh;
+  background: url('../../resources/images/pause.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center top;
 }

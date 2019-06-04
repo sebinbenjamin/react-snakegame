@@ -1,4 +1,5 @@
 .app {
   margin: auto;
-  border-style: dotted;
+  background-color: lavender;
+  /* background-color: #cddc39; */
 }

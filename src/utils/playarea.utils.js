@@ -1,9 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { primaryKeys, altKeys } from "../Constants/keys";
 
-export const playerKeyDown = (event, that) => {
-  const oldDirection = that.state.direction;
-  let newDirection = that.state.direction;
+export const playerKeyDown = (event, setNewDirMethod, oldDirection, that) => {
+  let newDirection = oldDirection;
   switch (event.keyCode) {
     case primaryKeys.UP || altKeys.UP:
       newDirection = 'UP';
@@ -21,21 +20,31 @@ export const playerKeyDown = (event, that) => {
       newDirection = 'RIGHT';
       event.preventDefault();
       break;
+    case primaryKeys.PAUSE || altKeys.PAUSE:
+      event.preventDefault();
+      break;
+    default:
+      // eslint-disable-next-line no-console
+      console.warn('Pressed', event.key);
+      break;
   }
 
-  if (validDirectionChange(oldDirection, newDirection))
-    that.setState({
-      direction: newDirection
-    });
+  if (validDirectionChange(oldDirection, newDirection)) {
+    console.log('called setNewDirection:', newDirection);
+    setNewDirMethod(newDirection, that);
+  }
 }
 
 export const validDirectionChange = (oldDirection, newDirection) => {
-  if (newDirection == oldDirection)
+  console.log('oldDirection', oldDirection)
+  console.log('newDirection', newDirection)
+  console.log(newDirection === oldDirection)
+  if (newDirection === oldDirection)
     return false;
-  else if (oldDirection == 'UP' && newDirection == 'DOWN' || oldDirection == 'DOWN' && newDirection == 'UP')
+  else if ((oldDirection === 'UP' && newDirection === 'DOWN') || (oldDirection === 'DOWN' && newDirection === 'UP'))
     return false;
-  else if (oldDirection == 'LEFT' && newDirection == 'RIGHT' || oldDirection == 'RIGHT' && newDirection == 'LEFT')
+  else if ((oldDirection === 'LEFT' && newDirection === 'RIGHT') || (oldDirection === 'RIGHT' && newDirection === 'LEFT'))
     return false;
-
-  return true;
+  else
+    return true;
 }
