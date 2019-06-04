@@ -15,26 +15,22 @@
 
 button {
   flex: 0 0 10%;
-  background-color: #2196f3;
   border: none;
-  color: white;
-  font-size: medium;
   padding: 0.4em;
+}
+
+.statusMsg {
+  flex-basis: 20%;
 }
 
 .play {
   width: 4vh;
   height: 4vh;
-  background: url('../../resources/images/play.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center top;
+  outline: none;
 }
-.pause {
-  width: 2vh;
-  height: 2vh;
-  background: url('../../resources/images/pause.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center top;
+
+.reset {
+  color: white;
+  background-color: #2196f3;
+  font-size: medium;
 }
