@@ -8,6 +8,7 @@ import styles from "./PlayArea.module.css";
 
 import { moveSnake } from "../../utils/snake.utils";
 import { playerKeyDown } from "../../utils/playarea.utils";
+import { getRandomPositions } from "../../utils/misc.utils";
 
 //all positions are in [x, y], where x and y are the coordinates on a 
 const initialState = {
@@ -21,8 +22,10 @@ const initialState = {
 
 class PlayArea extends React.Component {
   state = initialState;
+
   componentDidMount() {
     const { speed } = this.state;
+    this.setState({ fruit: getRandomPositions() });
     // for (let i = 0; i <= 100; i++) {
     //   this.playGame();
     // }
