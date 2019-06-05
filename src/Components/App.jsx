@@ -11,6 +11,7 @@ import styles from "./App.module.css";
 
 const initialState = {
   isPaused: false,
+  isGameOver: false,
   score: 0,
   level: 0
 }
@@ -21,9 +22,24 @@ class App extends React.Component {
   updateGamePlay() {
     this.setState((prevState) => {
       return {
-        isPaused: !prevState.isPaused
+        isPaused: !prevState.isPaused//pauses and resumes game
       }
     });
+  }
+  resetGamePlay(){
+    this.setState({
+      ...initialState,
+      isGameOver: false,
+      isPaused: false
+    })
+  }
+
+  gameOver() {
+    this.setState({
+      ...initialState,
+      isGameOver: true,
+      isPaused: true
+    })
   }
 
   updateScore(scoreGained) {
@@ -49,12 +65,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { isPaused, score, level } = this.state;
+    const { isPaused, score, level, isGameOver } = this.state;
     return (
       <div className={styles.app}>
         <GameProgress score={score} level={level} />
-        <PlayArea isPaused={isPaused} changeGamePlay={() => this.updateGamePlay()} updateScore={(scoreGained) => this.updateScore(scoreGained)} />
-        <GameControls isPaused={isPaused} changeGamePlay={() => { this.updateGamePlay() }} />
+        <PlayArea isPaused={isPaused} isGameOver={isGameOver} gameOver={() => this.gameOver()} changeGamePlay={() => this.updateGamePlay()} updateScore={(scoreGained) => this.updateScore(scoreGained)} />
+        <GameControls isGameOver={isGameOver} isPaused={isPaused} changeGamePlay={() => this.updateGamePlay()} resetGamePlay={() => this.resetGamePlay()} />
         <Attribution />
       </div>
     )

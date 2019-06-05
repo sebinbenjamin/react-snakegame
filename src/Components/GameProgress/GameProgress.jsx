@@ -15,7 +15,7 @@ const GameProgress = (props) => {
           Level : &nbsp;
           {level}
         </div>
-        <div className={style.highScore}> High Score : </div>
+        {/* <div className={style.highScore}> High Score : </div> */}
       </div>
     </div>
   )

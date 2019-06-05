@@ -49,9 +49,9 @@ export const validDirectionChange = (oldDirection, newDirection) => {
     return true;
 }
 
-export const checkObjectCollision = (object, snakeHead) => {
-  if ((Math.abs(object[0] - snakeHead[0]) < SAFE_DISTANCE) && (Math.abs(object[1] - snakeHead[1]) < SAFE_DISTANCE)){
-    console.info(object, 'collided with snake head at',snakeHead);
+export const checkObjectCollision = (object, snakeHead, distance = SAFE_DISTANCE) => {
+  if ((Math.abs(object[0] - snakeHead[0]) < distance) && (Math.abs(object[1] - snakeHead[1]) < distance)) {
+    console.info(object, 'collided with snake head at', snakeHead,'. Within distance',distance);
     return true;
   }
   return false;

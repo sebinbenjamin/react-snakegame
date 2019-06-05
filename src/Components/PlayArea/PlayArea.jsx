@@ -10,7 +10,7 @@ import styles from "./PlayArea.module.css";
 import { moveSnake } from "../../utils/snake.utils";
 import { playerKeyDown, checkObjectCollision } from "../../utils/playarea.utils";
 import { getRandomPositions } from "../../utils/misc.utils";
-import { FRUIT_SCORE, REWARD_MULTIPLIER } from '../../Constants/misc';
+import { FRUIT_SCORE, REWARD_SCORE_CHANGEBY, REWARD_SPEED_FACTOR, MAX_SPEED, FRUIT_SPEED_CHANGE, REWARD_MIN_INTERVAL, REWARD_INTERVAL_FACTOR } from '../../Constants/misc';
 
 //all positions are in [x, y]
 const initialState = {
@@ -24,19 +24,27 @@ const initialState = {
 
 class PlayArea extends React.Component {
   state = initialState;
-
+  gameClock = null;
+  rewardClock = null;
   componentDidMount() {
     const { speed } = this.state;
-    this.setState({ fruit: getRandomPositions() });
+    this.setState({
+      fruit: getRandomPositions(),
+      reward: getRandomPositions()
+    });
     // for (let i = 0; i <= 100; i++) {
     //   this.playGame();
     // }
-    setInterval(() => this.playGame(), speed);
+
+    this.rewardClock = setInterval(() => this.showRewards(), REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));
+    this.gameClock = setInterval(() => this.playGame(), speed);
     window.addEventListener('keydown', this.passPlayerKeyDown.bind(this));
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.passPlayerKeyDown);
+    clearInterval(this.gameClock);
+    clearInterval(this.rewardClock);
   }
 
   setNewDirection(newDirection, that) {
@@ -54,32 +62,67 @@ class PlayArea extends React.Component {
   }
 
   playGame() {
-    const { isPaused, updateScore } = this.props;
-    const { fruit, snakeParts, reward, showReward } = this.state;
-    let newFruit = [...fruit], newReward = [...reward], newShowReward = showReward, hasEatenFruit = false;
+    const { isPaused, updateScore, isGameOver, gameOver } = this.props;
+    const { fruit, snakeParts, reward, showReward, speed } = this.state;
+    let newFruit = [...fruit], newReward = [...reward], newShowReward = showReward, newSpeed = speed, hasEatenFruit = false;
 
-    if (!isPaused) {
+    if (this.checkIsSelfCollided(snakeParts)) {
+      console.info('Snake self-collided, GAME OVER');
+      gameOver();
+      setTimeout(() => this.setState(initialState), 3000)
+    }
+    else if (!isPaused && !isGameOver) {
       if (checkObjectCollision(fruit, snakeParts[0])) {
         updateScore(FRUIT_SCORE);
         hasEatenFruit = true;
         newFruit = getRandomPositions();
-        console.info('Got a fruit at', fruit);
+        newSpeed = Math.max(MAX_SPEED, newSpeed - FRUIT_SPEED_CHANGE);
+        this.updateGamePlaySpeed(newSpeed);
       }
       if (checkObjectCollision(reward, snakeParts[0]) && showReward) {
-        updateScore(FRUIT_SCORE * REWARD_MULTIPLIER);
+        updateScore(FRUIT_SCORE * REWARD_SCORE_CHANGEBY);
         newShowReward = !newShowReward;
         newReward = getRandomPositions();
         console.info('Got a reward at', reward);
+        newSpeed = (newSpeed + FRUIT_SPEED_CHANGE) * REWARD_SPEED_FACTOR;
+        this.updateGamePlaySpeed(newSpeed);
+        this.updateRewardInterval(newSpeed);
       }
-      this.setState((state) => {
+      this.setState((prevState) => {
         return {
-          snakeParts: moveSnake(state.snakeParts, state.direction, hasEatenFruit),
+          snakeParts: moveSnake(prevState.snakeParts, prevState.direction, hasEatenFruit),
           fruit: newFruit, // is this a good practise to update the state ?
           reward: newReward, // uuh...does'nt react check if the values are chnaged ?
-          showReward: newShowReward
+          showReward: newShowReward,
+          speed: newSpeed
         }
       });
     }
+  }
+
+  showRewards() {
+    this.setState({
+      showReward: true
+    })
+  }
+
+  updateGamePlaySpeed(newSpeed) {
+    const { speed } = this.state;//is it possible to get it from state after the setstate
+    console.info('Speed Update from', speed, 'to', newSpeed);
+    clearInterval(this.gameClock);
+    this.gameClock = setInterval(() => this.playGame(), newSpeed);
+  }
+
+  updateRewardInterval(speed){
+    console.log('Reward interval set to',REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));
+    clearInterval(this.rewardClock);
+    this.rewardClock = setInterval(() => this.showRewards(), REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));    
+  }
+
+  checkIsSelfCollided(snakeParts) {
+    const [head, ...bodyParts] = [...snakeParts];
+    const withoutFirstBodyPart = bodyParts.slice(1);
+    return withoutFirstBodyPart.some(part => checkObjectCollision(part, head, 2));
   }
 
   render() {
@@ -96,7 +139,9 @@ class PlayArea extends React.Component {
 
 PlayArea.propTypes = {
   isPaused: PropTypes.bool.isRequired,
-  updateScore: PropTypes.func.isRequired
+  isGameOver: PropTypes.bool.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  gameOver: PropTypes.func.isRequired
 }
 
 export default PlayArea;
