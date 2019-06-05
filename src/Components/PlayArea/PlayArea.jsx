@@ -10,16 +10,19 @@ import styles from "./PlayArea.module.css";
 import { moveSnake } from "../../utils/snake.utils";
 import { playerKeyDown, checkObjectCollision } from "../../utils/playarea.utils";
 import { getRandomPositions } from "../../utils/misc.utils";
-import { FRUIT_SCORE, REWARD_SCORE_CHANGEBY, REWARD_SPEED_FACTOR, MAX_SPEED, FRUIT_SPEED_CHANGE, REWARD_MIN_INTERVAL, REWARD_INTERVAL_FACTOR } from '../../Constants/misc';
+import {
+  FRUIT_SCORE, REWARD_SCORE_CHANGEBY, REWARD_SPEED_FACTOR, INITIAL_SNAKE_SPEED,
+  MAX_SPEED, FRUIT_SPEED_CHANGE, REWARD_MIN_INTERVAL, REWARD_INTERVAL_FACTOR
+} from '../../Constants/misc';
 
 //all positions are in [x, y]
 const initialState = {
-  speed: 200,
+  speed: INITIAL_SNAKE_SPEED,
   direction: 'UP',
   snakeParts: [[0, 2], [0, 0]],
   fruit: [70, 80],
   reward: [80, 80],
-  showReward: true,
+  showReward: false,
 }
 
 class PlayArea extends React.Component {
@@ -101,9 +104,11 @@ class PlayArea extends React.Component {
   }
 
   showRewards() {
-    this.setState({
-      showReward: true
-    })
+    const { speed } = this.state;
+    if (speed <= 125)
+      this.setState({
+        showReward: true
+      })
   }
 
   updateGamePlaySpeed(newSpeed) {
@@ -113,10 +118,10 @@ class PlayArea extends React.Component {
     this.gameClock = setInterval(() => this.playGame(), newSpeed);
   }
 
-  updateRewardInterval(speed){
-    console.log('Reward interval set to',REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));
+  updateRewardInterval(speed) {
+    console.log('Reward interval set to', REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));
     clearInterval(this.rewardClock);
-    this.rewardClock = setInterval(() => this.showRewards(), REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));    
+    this.rewardClock = setInterval(() => this.showRewards(), REWARD_MIN_INTERVAL + speed * Math.log2(speed * REWARD_INTERVAL_FACTOR));
   }
 
   checkIsSelfCollided(snakeParts) {
