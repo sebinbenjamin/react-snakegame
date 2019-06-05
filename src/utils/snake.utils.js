@@ -37,6 +37,6 @@ export const moveSnake = ([...snakeParts], direction) => {
   const [oldSnakeHead, ...oldSnakeBody] = Array.from(snakeParts);
   const newSnakeBody = oldSnakeBody.slice(0, -1);//remove last element in the snake's body
   const [newHeadX, newHeadY] = getNextHeadPos(oldSnakeHead, direction);
-  // console.info('New position:', { newHeadX, newHeadY });
+  console.info('Head Position:', { newHeadX, newHeadY });
   return [[newHeadX, newHeadY], oldSnakeHead, ...newSnakeBody];
 }

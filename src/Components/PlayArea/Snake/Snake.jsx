@@ -5,7 +5,7 @@ import { uid } from 'react-uid';
 import style from "./Snake.module.css"
 
 const Snake = ({ snakeParts, direction }) => {
-  const snakeBody = snakeParts.slice(1);
+  const snakeBody = snakeParts.slice(1);//potential bug turned into feature. snake with 0 body not possible
   const snakeHead = snakeParts[0];
   return (
     <div className={style.Snake}>

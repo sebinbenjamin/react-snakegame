@@ -7,17 +7,17 @@ import Reward from "./Reward/Reward";
 import styles from "./PlayArea.module.css";
 
 import { moveSnake } from "../../utils/snake.utils";
-import { playerKeyDown } from "../../utils/playarea.utils";
+import { playerKeyDown, checkFruitCollision, checkRewardCollision } from "../../utils/playarea.utils";
 import { getRandomPositions } from "../../utils/misc.utils";
 
-//all positions are in [x, y], where x and y are the coordinates on a 
+//all positions are in [x, y]
 const initialState = {
-  speed: 500,
+  speed: 1500,
   direction: 'UP',
-  snakeParts: [[0, 8], [0, 6], [0, 4], [0, 2], [0, 0]],
-  fruit: [80, 80],
-  reward: [20, 10],
-  showReward: true,
+  snakeParts: [[0, 2], [0, 0]],
+  fruit: [70, 80],
+  reward: [80, 80],
+  showReward: false,
 }
 
 class PlayArea extends React.Component {
@@ -53,10 +53,24 @@ class PlayArea extends React.Component {
 
   playGame() {
     const { isPaused } = this.props;
+    const { fruit, snakeParts, reward } = this.state;
+    let newFruit = [...fruit], newReward = [...reward];
+
     if (!isPaused) {
+      if (checkFruitCollision(fruit, snakeParts[0])) {
+        newFruit = getRandomPositions();
+        console.info('Got a fruit at', fruit);
+        
+      }
+      if (checkRewardCollision(reward, snakeParts[0])) {
+        newReward = getRandomPositions();
+        console.info('Got a reward at', fruit);
+      }
       this.setState((state) => {
         return {
-          snakeParts: moveSnake(state.snakeParts, state.direction)
+          snakeParts: moveSnake(state.snakeParts, state.direction),
+          fruit: newFruit, // is this a good practise to update the state ?
+          reward: newReward // uuh...does'nt react check if the values are chnaged ?
         }
       });
     }

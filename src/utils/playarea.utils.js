@@ -31,15 +31,12 @@ export const playerKeyDown = (event, setNewDirMethod, oldDirection, that) => {
   }
 
   if (validDirectionChange(oldDirection, newDirection)) {
-    console.log('called setNewDirection:', newDirection);
+    console.info('Direction Update', { oldDirection, newDirection });
     setNewDirMethod(newDirection, that);
   }
 }
 
 export const validDirectionChange = (oldDirection, newDirection) => {
-  console.log('oldDirection', oldDirection)
-  console.log('newDirection', newDirection)
-  console.log(newDirection === oldDirection)
   if (newDirection === oldDirection)
     return false;
   else if ((oldDirection === 'UP' && newDirection === 'DOWN') || (oldDirection === 'DOWN' && newDirection === 'UP'))
@@ -49,3 +46,14 @@ export const validDirectionChange = (oldDirection, newDirection) => {
   else
     return true;
 }
+
+export const checkFruitCollision = (fruit, snakeHead) => {
+  console.log(fruit, snakeHead);
+  if ((Math.abs(fruit[0] - snakeHead[0]) < 5) && (Math.abs(fruit[1] - snakeHead[1]) < 5))
+    return true;
+  return false;
+}
+export const checkRewardCollision = (reward, snakeHead) => {
+
+}
+
