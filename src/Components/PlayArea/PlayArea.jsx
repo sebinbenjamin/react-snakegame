@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,17 +8,18 @@ import Reward from "./Reward/Reward";
 import styles from "./PlayArea.module.css";
 
 import { moveSnake } from "../../utils/snake.utils";
-import { playerKeyDown, checkFruitCollision, checkRewardCollision } from "../../utils/playarea.utils";
+import { playerKeyDown, checkObjectCollision } from "../../utils/playarea.utils";
 import { getRandomPositions } from "../../utils/misc.utils";
+import { FRUIT_SCORE, REWARD_MULTIPLIER } from '../../Constants/misc';
 
 //all positions are in [x, y]
 const initialState = {
-  speed: 1500,
+  speed: 200,
   direction: 'UP',
   snakeParts: [[0, 2], [0, 0]],
   fruit: [70, 80],
   reward: [80, 80],
-  showReward: false,
+  showReward: true,
 }
 
 class PlayArea extends React.Component {
@@ -52,25 +54,29 @@ class PlayArea extends React.Component {
   }
 
   playGame() {
-    const { isPaused } = this.props;
-    const { fruit, snakeParts, reward } = this.state;
-    let newFruit = [...fruit], newReward = [...reward];
+    const { isPaused, updateScore } = this.props;
+    const { fruit, snakeParts, reward, showReward } = this.state;
+    let newFruit = [...fruit], newReward = [...reward], newShowReward = showReward, hasEatenFruit = false;
 
     if (!isPaused) {
-      if (checkFruitCollision(fruit, snakeParts[0])) {
+      if (checkObjectCollision(fruit, snakeParts[0])) {
+        updateScore(FRUIT_SCORE);
+        hasEatenFruit = true;
         newFruit = getRandomPositions();
         console.info('Got a fruit at', fruit);
-        
       }
-      if (checkRewardCollision(reward, snakeParts[0])) {
+      if (checkObjectCollision(reward, snakeParts[0]) && showReward) {
+        updateScore(FRUIT_SCORE * REWARD_MULTIPLIER);
+        newShowReward = !newShowReward;
         newReward = getRandomPositions();
-        console.info('Got a reward at', fruit);
+        console.info('Got a reward at', reward);
       }
       this.setState((state) => {
         return {
-          snakeParts: moveSnake(state.snakeParts, state.direction),
+          snakeParts: moveSnake(state.snakeParts, state.direction, hasEatenFruit),
           fruit: newFruit, // is this a good practise to update the state ?
-          reward: newReward // uuh...does'nt react check if the values are chnaged ?
+          reward: newReward, // uuh...does'nt react check if the values are chnaged ?
+          showReward: newShowReward
         }
       });
     }
@@ -89,7 +95,8 @@ class PlayArea extends React.Component {
 }
 
 PlayArea.propTypes = {
-  isPaused: PropTypes.bool.isRequired
+  isPaused: PropTypes.bool.isRequired,
+  updateScore: PropTypes.func.isRequired
 }
 
 export default PlayArea;

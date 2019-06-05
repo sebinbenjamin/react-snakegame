@@ -9,3 +9,5 @@ export const PART_SIZE = {
 };
 
 export const BOARD_USABLE_SIZE = 80;
+
+export const SAFE_DISTANCE = 5;

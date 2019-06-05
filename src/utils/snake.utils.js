@@ -33,9 +33,9 @@ const getNextHeadPos = (currHead, direction) => {
   }
 }
 
-export const moveSnake = ([...snakeParts], direction) => {
+export const moveSnake = ([...snakeParts], direction, hasEatenFruit) => {
   const [oldSnakeHead, ...oldSnakeBody] = Array.from(snakeParts);
-  const newSnakeBody = oldSnakeBody.slice(0, -1);//remove last element in the snake's body
+  const newSnakeBody = hasEatenFruit ? oldSnakeBody : oldSnakeBody.slice(0, -1);//remove last element in the snake's body
   const [newHeadX, newHeadY] = getNextHeadPos(oldSnakeHead, direction);
   console.info('Head Position:', { newHeadX, newHeadY });
   return [[newHeadX, newHeadY], oldSnakeHead, ...newSnakeBody];

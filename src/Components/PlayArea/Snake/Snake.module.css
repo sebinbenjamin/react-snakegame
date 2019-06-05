@@ -14,20 +14,31 @@
   background-position: center top;
   background-repeat: no-repeat;
   background-size: contain;
+  margin-bottom: 0.5vh;
 }
+
 .SnakeHead.DOWN {
   background: url('../../../resources/images/snake-head-up.svg');
   background-position: center top;
   background-repeat: no-repeat;
   background-size: contain;
+  margin-bottom: -1.5vh;
 }
 
-.SnakeHead.RIGHT,
+.SnakeHead.RIGHT {
+  background: url('../../../resources/images/snake-head-side.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 1vh;
+}
+
 .SnakeHead.LEFT {
   background: url('../../../resources/images/snake-head-side.svg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+  margin-left: -1vh;
 }
 
 .SnakeBody {
@@ -36,7 +47,7 @@
   height: 4vh;
   background: url('../../../resources/images/snake-body.svg');
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: contain;
 }
 
 .SnakeBody.UP {
@@ -44,15 +55,18 @@
   margin-left: 0.5vh;
   margin-right: 0.5vh;
 }
+
 .SnakeBody.DOWN {
   background-position: center top;
   margin-left: 0.5vh;
   margin-right: 0.5vh;
 }
+
 .SnakeBody.LEFT {
   background-position: center right;
   margin: 0.5vh;
 }
+
 .SnakeBody.RIGHT {
   background-position: center left;
   margin: 0.5vh;

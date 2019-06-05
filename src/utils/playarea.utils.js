@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 import { primaryKeys, altKeys } from "../Constants/keys";
+import { SAFE_DISTANCE } from "../Constants/layout-size";
 
 export const playerKeyDown = (event, setNewDirMethod, oldDirection, that) => {
   let newDirection = oldDirection;
@@ -47,13 +49,11 @@ export const validDirectionChange = (oldDirection, newDirection) => {
     return true;
 }
 
-export const checkFruitCollision = (fruit, snakeHead) => {
-  console.log(fruit, snakeHead);
-  if ((Math.abs(fruit[0] - snakeHead[0]) < 5) && (Math.abs(fruit[1] - snakeHead[1]) < 5))
+export const checkObjectCollision = (object, snakeHead) => {
+  if ((Math.abs(object[0] - snakeHead[0]) < SAFE_DISTANCE) && (Math.abs(object[1] - snakeHead[1]) < SAFE_DISTANCE)){
+    console.info(object, 'collided with snake head at',snakeHead);
     return true;
+  }
   return false;
-}
-export const checkRewardCollision = (reward, snakeHead) => {
-
 }
 

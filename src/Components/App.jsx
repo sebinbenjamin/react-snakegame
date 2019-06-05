@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
@@ -5,10 +6,13 @@ import GameProgress from "./GameProgress/GameProgress";
 import PlayArea from "./PlayArea/PlayArea";
 import GameControls from "./GameControls/GameControls";
 import Attribution from "./Attribution/Attribution";
+import { LEVELUP_SCORE } from "../Constants/misc";
 import styles from "./App.module.css";
 
 const initialState = {
-  isPaused: false
+  isPaused: false,
+  score: 0,
+  level: 0
 }
 
 class App extends React.Component {
@@ -19,15 +23,37 @@ class App extends React.Component {
       return {
         isPaused: !prevState.isPaused
       }
-    })
+    });
+  }
+
+  updateScore(scoreGained) {
+    console.log('Updating score gain of', scoreGained);
+    this.setState((prevState) => {
+      return { score: prevState.score + scoreGained }
+    });
+    this.checkAndUpdateLevel();//should I pass it here ? would the state be already updated if i use this.state.score in the fn?
+  }
+
+  checkAndUpdateLevel() {
+    const { score } = this.state;
+    this.setState((prevState) => {
+      const newLevel = Math.floor(score / LEVELUP_SCORE);
+      if (newLevel !== prevState.level) {
+        console.log('Level UP !! : ', newLevel);
+        return {
+          level: prevState.level + 1
+        }
+      }
+    });
+    return;
   }
 
   render() {
-    const { isPaused } = this.state;
+    const { isPaused, score, level } = this.state;
     return (
       <div className={styles.app}>
-        <GameProgress />
-        <PlayArea isPaused={isPaused} changeGamePlay={() => { this.updateGamePlay() }} />
+        <GameProgress score={score} level={level} />
+        <PlayArea isPaused={isPaused} changeGamePlay={() => this.updateGamePlay()} updateScore={(scoreGained) => this.updateScore(scoreGained)} />
         <GameControls isPaused={isPaused} changeGamePlay={() => { this.updateGamePlay() }} />
         <Attribution />
       </div>
