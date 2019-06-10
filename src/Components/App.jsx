@@ -6,7 +6,7 @@ import GameProgress from "./GameProgress/GameProgress";
 import PlayArea from "./PlayArea/PlayArea";
 import GameControls from "./GameControls/GameControls";
 import Attribution from "./Attribution/Attribution";
-import { LEVELUP_SCORE } from "../Constants/misc";
+import { LEVELUP_SCORE, GAMEOVER_RESET_INTERVAL } from "../Constants/misc";
 import styles from "./App.module.css";
 
 const initialState = {
@@ -20,13 +20,17 @@ class App extends React.Component {
   state = initialState;
 
   updateGamePlay() {
+    // const { isGameOver } = this.state;
+    // if (isGameOver)
+    //   setTimeout(() => { this.resetGamePlay(); }, GAMEOVER_RESET_INTERVAL);
+    // else
     this.setState((prevState) => {
       return {
         isPaused: !prevState.isPaused//pauses and resumes game
       }
     });
   }
-  resetGamePlay(){
+  resetGamePlay() {
     this.setState({
       ...initialState,
       isGameOver: false,

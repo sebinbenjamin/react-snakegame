@@ -12,7 +12,7 @@ import { playerKeyDown, checkObjectCollision } from "../../utils/playarea.utils"
 import { getRandomPositions } from "../../utils/misc.utils";
 import {
   FRUIT_SCORE, REWARD_SCORE_CHANGEBY, REWARD_SPEED_FACTOR, INITIAL_SNAKE_SPEED,
-  MAX_SPEED, FRUIT_SPEED_CHANGE, REWARD_MIN_INTERVAL, REWARD_INTERVAL_FACTOR
+  MAX_SPEED, FRUIT_SPEED_CHANGE, REWARD_MIN_INTERVAL, REWARD_INTERVAL_FACTOR, GAMEOVER_RESET_INTERVAL
 } from '../../Constants/misc';
 
 //all positions are in [x, y]
@@ -72,7 +72,7 @@ class PlayArea extends React.Component {
     if (this.checkIsSelfCollided(snakeParts)) {
       console.info('Snake self-collided, GAME OVER');
       gameOver();
-      setTimeout(() => this.setState(initialState), 3000)
+      setTimeout(() => this.setState(initialState), GAMEOVER_RESET_INTERVAL)
     }
     else if (!isPaused && !isGameOver) {
       if (checkObjectCollision(fruit, snakeParts[0])) {
