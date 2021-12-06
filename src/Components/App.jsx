@@ -6,7 +6,7 @@ import GameProgress from "./GameProgress/GameProgress";
 import PlayArea from "./PlayArea/PlayArea";
 import GameControls from "./GameControls/GameControls";
 import Attribution from "./Attribution/Attribution";
-import { LEVELUP_SCORE, GAMEOVER_RESET_INTERVAL } from "../Constants/misc";
+import { LEVELUP_SCORE } from "../Constants/misc";
 import styles from "./App.module.css";
 
 const initialState = {
